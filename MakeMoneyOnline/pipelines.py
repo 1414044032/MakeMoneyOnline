@@ -8,10 +8,6 @@
 import MySQLdb
 import MySQLdb.cursors
 from twisted.enterprise import adbapi
-from scrapy import signals
-from puremysql import PureMysql
-from datetime import datetime
-import logging
 from scrapy.exceptions import DropItem
 import redis
 from pybloom_live import ScalableBloomFilter
