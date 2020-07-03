@@ -21,15 +21,16 @@ class MakemoneyonlineItem(scrapy.Item):
     link = scrapy.Field()
     tag = scrapy.Field()
     push_time = scrapy.Field()
+    content = scrapy.Field()
 
     def get_insert_sql(self):
         insert_sql = """
                             insert into 
-                            online_message (title,`desc`,cover,source,link,tag,pushtime) 
-                            values (%s,%s,%s,%s,%s,%s,%s)
+                            online_message (title,`desc`,cover,source,link,tag,pushtime,content) 
+                            values (%s,%s,%s,%s,%s,%s,%s,%s)
                              """
         parms = (self['title'], self['desc'], self['cover'], self['source'], self["link"],
-                 self["tag"], self["push_time"])
+                 self["tag"], self["push_time"], self["content"])
         return insert_sql, parms
 
     def save_to_redis(self):

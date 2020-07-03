@@ -90,11 +90,11 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-MYSQL_HOST = ""
-MYSQL_DBNAME = ""
+MYSQL_HOST = "127.0.0.1"
+MYSQL_DBNAME = "spider_content"
 MYSQL_USER = "root"
 MYSQL_PORT = 3306
-MYSQL_PASSWORD = ""
+MYSQL_PASSWORD = "zxcvbnm"
 LOG_LEVEL = 'INFO'
 MY_USER_AGENT = [
     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",

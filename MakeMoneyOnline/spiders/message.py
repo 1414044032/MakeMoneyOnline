@@ -42,7 +42,13 @@ class MessageSpider(scrapy.Spider):
             make_item['tag'] = tag
             make_item['source'] = source
             make_item['push_time'] = push_time
-            yield make_item
+            yield Request(url=link, meta={"item": make_item}, callback=self.parse_content)
+
+    def parse_content(self, response):
+        make_item = response.meta.get("item", {})
+        # 保存body部分
+        make_item['content'] = response.xpath('//div[@class="single-content"]').extract_first("")
+        yield make_item
 
     def sth_parse(self, response):
         counts = response.meta.get("counts", 1)
@@ -51,7 +57,7 @@ class MessageSpider(scrapy.Spider):
             next_page = response.xpath(
                 './/div[@class="layui-tab-item layui-show"]/ul[@class="pager"]/li[2]/a/@href').extract_first()
             format_url = urljoin(response.url, next_page)
-            yield Request(url=format_url, meta={'counts': counts + 1}, callback=self.sth_pars)
+            yield Request(url=format_url, meta={'counts': counts + 1}, callback=self.sth_parse)
             for item in body_list:
                 title = item.xpath('./div[@class="list_title"]/a/text()').extract_first()
                 desc = ''
@@ -68,4 +74,10 @@ class MessageSpider(scrapy.Spider):
                 make_item['tag'] = '-'.join(tag)
                 make_item['source'] = source
                 make_item['push_time'] = '2020-' + push_time
-                yield make_item
+                yield Request(url=link, meta={"item": make_item}, callback=self.sth_pars_content)
+
+    def sth_pars_content(self, response):
+        make_item = response.meta.get("item", {})
+        # 保存body部分
+        make_item['content'] = response.xpath('//div[@class="div_content_text"]').extract_first("")
+        yield make_item
